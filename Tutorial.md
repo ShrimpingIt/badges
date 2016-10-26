@@ -128,7 +128,8 @@ Now connect to your Cockle and run the following lines to set up the display and
 from neopixel import NeoPixel
 from machine import Pin
 count = 8
-display = NeoPixel(Pin(4), count)
+output = Pin(4)
+display = NeoPixel(output, count)
 red = (255,0,0)
 display[0] = red
 display.write()
@@ -147,7 +148,11 @@ display[2]=(0,0,255)
 display.write()
 ```
 
-To set all the pixels, we can use a ```for``` loop block - note the first line finishes with a colon, and the commands executed in the loop are indented.
+###### Introducing For
+
+To set all the pixels, we can use a ```for``` loop block. A for loop in python runs a set of commands once for every item in a list. We can create a list of the different pixel positions between 0 and count using ```range(count)```.
+
+Note the first line finishes with a colon, and the commands to be repeated in the loop are indented (only ```display[pos] = red``` is repeated in the loop below).
 
 ```
 for pos in range(count):
@@ -166,6 +171,10 @@ for pos in range(count):
 	display[pos] = (0, 0, (count - pos)//count*255)
 display.write()
 ```
+
+###### Introducing While
+
+A ```while``` loop block repeats commands ***while*** an expression remains true. This is often used with 
 
 ```
 greenVals = [pos*255//count for pos in range(count)]
