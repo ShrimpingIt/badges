@@ -12,8 +12,8 @@ blueVals = [0 for pos in range(count)]
 
 offset = 0
 while True:
-    for pos in range(count):
-        display[(pos + offset) % count] = (greenVals[pos], redVals[pos], blueVals[pos])
-    display.write()
-    sleep(0.05)
-    offset = offset + 1
+	for pos in range(count):
+		display[(pos + offset) % count] = (greenVals[pos], redVals[pos], blueVals[pos])
+	display.write()
+	sleep(0.05)
+	offset = offset + 1
