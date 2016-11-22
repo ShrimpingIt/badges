@@ -1,5 +1,7 @@
 # Cockle Badge Tutorial
 
+A possibly newer copy of this document is available at http://shrimping.it/project/badge/tutorial.pdf
+
 ## Equipment Provided
 
 In your packs you should have...
@@ -29,7 +31,7 @@ If you have a Cockle provided by @ShrimpingIt, then Micropython should already b
 	* @ShrimpingIt official USB cables can handle 2Amps. Cheaper cables often cannot power up the Cockle or the lights.
 
 * Step 2: Launch a 'Console'
-	* On @ShrimpingIt linux laptops (with Kupfer launcher) press ```CTRL+SPACE``` together, type ```terminal``` and press ```Return```
+	* On @ShrimpingIt linux laptops (with Kupfer launcher) press ```Windows Key```, type ```terminal``` and press ```Return```
 	* On Mac OS press the ```Apple+Space``` keys together, type ```terminal``` and press ```Return```
 	* On Windows, go to Start and Run, type ```cmd.exe``` and press ```Return```
 
@@ -90,13 +92,9 @@ Let's try it out to learn some fundamental programming concepts.
 		* Delete all spaces/tabs then press ```Return```
 		* Enter ```square(4)```
 
-##### Groups of Steps: Functions
-
-##### Forgetting
-
 ##### Libraries
 
-Functions can transform a number, for example ```sqrt(4*4)```
+Libraries contain reference implementations of functions for example ```sqrt(4*4)``` in the python ```math``` library calculates square roots.
 
 Type the following two lines
 
@@ -108,7 +106,7 @@ sqrt(4*4)
 ## Connecting the LED Display
 
 * You will need...
-	* The LED Display
+	* The 8-LED Display (this is long and thin)
 	* The Jumper wires
 
 Look on the back of your LED display. It should have three pins going into it, and three pins going out. Find the end of the board with the following three connections.
@@ -200,21 +198,22 @@ while True:
     offset = offset + 1
 ```
 
+## Intro to Voltage Divider
 
+USB is stepped from e.g. 5V down to 3.3V through a Low Dropout (LDO) regulator
 
+## Powering from batteries
 
+* Wire through badge to 3.3V
+    * 4x AAA battery pack 
+    	* very cheap batteries - more life from Duracells
+* Alternative Mobile Phone charger attached to Micro-USB 
+	* - potentially last for days
 
-
-## Python concepts
-
-
-
-### Blocks and Indentation
-
-
-## Operating on Batteries
 
 ## Finishing your Light-Up-Lanyard
+
+The badges you've been provided with can be used to carry your Cockle, Battery pack and LED display.
 
 ## Appendix A: Configuring your Own Laptop 
 
@@ -236,6 +235,10 @@ On Windows it may report ```['COM4']```, meaning the Port Name is ```COM4```
 
 If more than one port appears in the list, unplug and replug your NodeMCU, and identify which port  appears and disappears from the list.
 
-## Appendix B: Configuring your own NodeMCU 
+## Appendix B: Configuring your own NodeMCU
+
+See https://docs.micropython.org/en/latest/esp8266/esp8266/tutorial/intro.html or  http://bit.ly/2f0JdZL for short
 
 ## Appendix C: Programming over Wifi
+
+See https://docs.micropython.org/en/latest/esp8266/esp8266/tutorial/repl.html or http://bit.ly/2eELBby for short.
