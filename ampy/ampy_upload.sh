@@ -1,7 +1,9 @@
 #!/bin/sh
-killall screen
-`dirname $0`/../micropython/upload_image.sh
-sleep 3
-ampy --port /dev/ttyUSB0 run `dirname $0`/blank_display/main.py
-ampy --port /dev/ttyUSB0 put ./main.py
-ampy --port /dev/ttyUSB0 reset
+MAIN=$1
+CURRENT=`dirname $0`
+AMPY="ampy --port /dev/ttyUSB0"
+"${CURRENT}"/ampy_clean.sh
+# send the new main.py file
+${AMPY} put "${MAIN}" main.py
+# reset the board so it runs the new main.py file
+${AMPY} reset

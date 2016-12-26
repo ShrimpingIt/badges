@@ -1,89 +1,45 @@
-import webrepl
-webrepl.start(password='shrimping')
-
 from time import sleep
 from neopixel import NeoPixel
 from machine import Pin
 
-global np, count, default_color
-count = None
-default_color = None
+intensity = 0.1
 
-def init_pixel_count(num):
-	global count
-	count = num
+dataPin = Pin(4)
+ledCount = 64
+np = NeoPixel(dataPin, ledCount)
 
-def init_star():
-	init_pixel_count(7)
-
-def init_line():
-	init_pixel_count(8)
-	
-def init_grid():
-	init_pixel_count(64)
-
-init_grid()
-default_color = (64,64,0)
-np = NeoPixel(Pin(4), count)
-
-def wheel(wheelByte):
-    wheelByte = 255 - wheelByte
-    if wheelByte < 85:
-        return (255 - wheelByte * 3, 0, wheelByte * 3)
-    if wheelByte < 170:
-        wheelByte = wheelByte - 85
-        return (0, wheelByte * 3, 255 - wheelByte * 3)
-    wheelByte = wheelByte - 170
-    return (wheelByte * 3, 255 - wheelByte * 3, 0)
+def hsb(h, s, b):
+    if s == 0.0: return b, b, b
+    i = int(h*6.0) # XXX assume int() truncates!
+    f = (h*6.0) - i
+    p = b*(1.0 - s)
+    q = b*(1.0 - s*f)
+    t = b*(1.0 - s*(1.0-f))
+    if i%6 == 0: rgb = b, t, p
+    if i == 1: rgb = q, b, p
+    if i == 2: rgb = p, b, t
+    if i == 3: rgb = p, q, b
+    if i == 4: rgb = t, p, b
+    if i == 5: rgb = b, p, q
+    return [int(color * intensity * 255 )  for color in rgb]
 
 def blank():
-	global count
-	for pixel_id in range(0, count):
-		np[pixel_id] = (0,0,0)
+	for pos in range(ledCount):
+		np[pos]=(0,0,0)
+	np.write();
+
+saturation = 1
+brightness = 1
+rainbow = [hsb(hue, saturation, brightness) for hue in [x / ledCount for x in range(ledCount)]]
+
+def write_rainbow(start=0):	
+	for pos in range(ledCount):
+		np[pos] = rainbow[(pos + start) % ledCount]
 	np.write()
-    
-def star_fortune(step = 0.1):
-	global count, default_color
-	blank()
 	
-	lit_pixel = 0
-	offset_count = count - 1
-	while True:
-		#Iterate over each LED in the strip
-		for pixel_id in range(0, offset_count):
-			if pixel_id == lit_pixel:
-				np[pixel_id + 1] = default_color
-			else:
-				np[pixel_id + 1] = (0,0,0)
-
-		# Display the current pixel data on the Neopixel strip
-		np.write()
-		
-		lit_pixel = (lit_pixel + 1) % count
-
-		sleep(step)
-
-def rainbow_cycle(step=0.01, brightness=0.25, spread=32):
-	global count
-	blank()
-	wheelPos = 0
-	while True:
-		#Iterate over each LED in the strip
-		for pixel_id in range(0, count):
-			# Assign the current LED a color value from the rainbow sequence, with current offset
-			color = wheel((wheelPos + (pixel_id * spread )) % 255)
-			color = [int(val * brightness) for val in color]
-			np[pixel_id] = color
-		# Display the current pixel data on the Neopixel strip
-		np.write()
-		wheelPos = (wheelPos + 1) % 255
-		sleep(step)
-		
-def drop():
-	for pos in range(count):
-		blank()
-		np[pos] = (0,0,255)
-		np.write()
-		sleep(0.1)
-
-rainbow_cycle()
+delay = 0
+offset = 0
+while True:
+	write_rainbow(offset)
+	offset = (offset + 1) % ledCount
+	sleep(delay)
