@@ -7,7 +7,8 @@ sleep 3
 #BASENAME=esp8266-20160710-v1.8.2.bin
 #BASENAME=esp8266-20160809-v1.8.3.bin
 #BASENAME=esp8266-20160909-v1.8.4.bin
-BASENAME=esp8266-20161017-v1.8.5.bin
+#BASENAME=esp8266-20161017-v1.8.5.bin
+BASENAME=esp8266-20161110-v1.8.6.bin
 esptool.py --port /dev/ttyUSB0 --baud 115200 write_flash --flash_mode dio --flash_size=32m 0 `dirname $0`/firmware/${BASENAME}
 
 
